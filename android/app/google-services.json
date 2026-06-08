@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "397980327923-i2slk55kg9d486p0lmquml7cp47mbj1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tdah_app",
+            "certificate_hash": "eecc6fa4c6099c1b6811cc4a9befdcbce8a00fee"
+          }
+        },
+        {
           "client_id": "397980327923-eob4rc2redqrc4o4tenr8pj6gsotlfnj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "397980327923-eob4rc2redqrc4o4tenr8pj6gsotlfnj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "397980327923-bhevbpo23fhkppg2aga5ptpbhc62aqc4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tdahApp"
+              }
             }
           ]
         }

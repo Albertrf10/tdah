@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tdah_app/features/auth/controllers/auth_controller.dart';
+import 'package:go_router/go_router.dart';
+
+import '../controllers/auth_controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -10,7 +12,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final inputController = TextEditingController();
+  final emailController = TextEditingController();
   final passController = TextEditingController();
 
   String error = '';
@@ -18,7 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void loginEmail() async {
     try {
       await ref.read(authControllerProvider.notifier).loginEmail(
-        inputController.text,
+        emailController.text,
         passController.text,
       );
     } catch (e) {
@@ -28,6 +30,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void loginGoogle() async {
     await ref.read(authControllerProvider.notifier).loginGoogle();
+
   }
 
   @override
@@ -39,7 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: inputController,
+              controller: emailController,
               decoration: const InputDecoration(labelText: "Email"),
             ),
             TextField(
@@ -50,14 +53,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(height: 10),
             Text(error, style: const TextStyle(color: Colors.red)),
             const SizedBox(height: 10),
+
             ElevatedButton(
               onPressed: loginEmail,
               child: const Text("Login"),
             ),
+
             const SizedBox(height: 10),
+
             ElevatedButton(
               onPressed: loginGoogle,
               child: const Text("Login con Google"),
+            ),
+
+            TextButton(
+              onPressed: () {
+                context.go('/register');
+              },
+              child: const Text("Crear cuenta"),
             ),
           ],
         ),

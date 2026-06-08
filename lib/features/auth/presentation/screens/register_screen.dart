@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tdah_app/features/auth/data/auth_datasource.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../controllers/auth_controller.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final emailController = TextEditingController();
-  final userController = TextEditingController();
-  final passController = TextEditingController();
-  final repeatPassController = TextEditingController();
-
-  final auth = AuthDataSource();
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  final email = TextEditingController();
+  final pass = TextEditingController();
+  final user = TextEditingController();
 
   String error = '';
 
   void register() async {
-    if (passController.text != repeatPassController.text) {
-      setState(() => error = "Las contraseñas no coinciden");
-      return;
+    try {
+      await ref.read(authControllerProvider.notifier).register(
+        email.text,
+        pass.text,
+        user.text,
+      );
+    } catch (e) {
+      setState(() => error = "Error register");
     }
-
-    await auth.register(
-      email: emailController.text,
-      password: passController.text,
-      username: userController.text,
-    );
   }
 
   @override
@@ -37,17 +34,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(controller: emailController, decoration: const InputDecoration(labelText: "Email")),
-            TextField(controller: userController, decoration: const InputDecoration(labelText: "Username")),
-            TextField(controller: passController, obscureText: true, decoration: const InputDecoration(labelText: "Password")),
-            TextField(controller: repeatPassController, obscureText: true, decoration: const InputDecoration(labelText: "Repeat Password")),
+            TextField(controller: user, decoration: const InputDecoration(labelText: "Username")),
+            TextField(controller: email, decoration: const InputDecoration(labelText: "Email")),
+            TextField(controller: pass, obscureText: true, decoration: const InputDecoration(labelText: "Password")),
+
             const SizedBox(height: 10),
             Text(error, style: const TextStyle(color: Colors.red)),
+
             ElevatedButton(
               onPressed: register,
-              child: const Text("Register"),
-            )
+              child: const Text("Crear cuenta"),
+            ),
           ],
         ),
       ),

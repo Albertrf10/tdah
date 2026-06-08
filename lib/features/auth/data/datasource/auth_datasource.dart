@@ -6,7 +6,6 @@ class AuthDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // 🔐 REGISTER
   Future<User?> register({
     required String email,
     required String password,
@@ -30,7 +29,6 @@ class AuthDataSource {
     return user;
   }
 
-  // 🔐 LOGIN EMAIL
   Future<User?> loginWithEmail({
     required String email,
     required String password,
@@ -43,7 +41,6 @@ class AuthDataSource {
     return result.user;
   }
 
-  // 🔐 GOOGLE LOGIN
   Future<User?> loginWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -75,8 +72,11 @@ class AuthDataSource {
     return user;
   }
 
-  // 🔁 AUTH STATE
   Stream<User?> authStateChanges() {
     return _auth.authStateChanges();
+  }
+
+  Future<void> logout() async {
+    await _auth.signOut();
   }
 }
