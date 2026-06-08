@@ -1,0 +1,49 @@
+name: tdah_app
+description: "Focus system app for ADHD-style productivity with Firebase + AI expansion"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # 🔥 FIREBASE CORE
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.1.0
+  cloud_firestore: ^5.4.0
+  google_sign_in: ^6.2.1
+
+  # 🧠 STATE MANAGEMENT
+  flutter_riverpod: ^2.5.1
+
+  # 🧭 NAVIGATION
+  go_router: ^14.2.0
+
+  # 🧰 UTILITIES
+  intl: ^0.19.0
+  uuid: ^4.5.1
+
+  # 💾 LOCAL CACHE (para futuro offline + performance)
+  shared_preferences: ^2.3.2
+
+  # 📊 UI HELPERS
+  flutter_hooks: ^0.20.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+  # 🧱 CODE GENERATION (IMPORTANTE PARA IA + MODELOS)
+  build_runner: ^2.4.9
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0

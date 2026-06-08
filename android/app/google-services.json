@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "397980327923",
+    "project_id": "tdah-6472b",
+    "storage_bucket": "tdah-6472b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397980327923:android:934be9133eb1441be97c86",
+        "android_client_info": {
+          "package_name": "com.example.tdah_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397980327923-eob4rc2redqrc4o4tenr8pj6gsotlfnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApMm9UV6F9BQTuI9ZeVt3m6-OE5ed-nKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397980327923-eob4rc2redqrc4o4tenr8pj6gsotlfnj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
