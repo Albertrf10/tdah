@@ -2,289 +2,119 @@
 
 ## 🧠 Descripción
 
-**FocusFlow** es una app de productividad diseñada para reducir la fricción mental y ayudar a convertir tareas grandes en acciones pequeñas y ejecutables.
+**FocusFlow** es una aplicación de productividad especializada para personas con **TDAH (Trastorno por Déficit de Atención e Hiperactividad)**. Su objetivo principal es mitigar la parálisis por análisis y la disfunción ejecutiva, transformando objetivos complejos en micro-pasos accionables.
 
-A diferencia de un to-do tradicional, la app no muestra listas interminables, sino que guía al usuario paso a paso:
+A diferencia de los gestores de tareas convencionales que generan agobio con listas infinitas, FocusFlow utiliza un enfoque cognitivo de **"Acción Única"**, guiando al usuario para que se concentre exclusivamente en el siguiente paso ejecutable.
 
-> “¿Qué tengo que hacer ahora mismo?”
-
----
-
-## 🚀 Idea principal
-
-- ❌ No listas complejas
-- ❌ No sobrecarga de decisiones
-- ❌ No multitarea constante
-
-✔ Solo una acción visible  
-✔ Solo el siguiente paso importa  
-✔ Flujo continuo de acción guiada
+> “¿Qué tengo que hacer ahora mismo?” — El sistema elimina el ruido para que solo quede la acción.
 
 ---
 
-## ⚙️ Stack tecnológico
+## 🚀 Propuesta de Valor
 
-- Flutter
-- Riverpod (state management)
-- Firebase Auth (Google OAuth)
-- Firestore (base de datos principal)
-- go_router
-- Arquitectura feature-first + clean architecture ligera
+- **Reducción de Fricción:** Conversión de tareas grandes en pasos de 1-5 minutos.
+- **Cero Sobrecarga:** Solo una tarea visible a la vez en el modo foco.
+- **Asistencia con IA:** Desglose automático de proyectos complejos mediante inteligencia artificial.
+- **Rutinas Guiadas:** Automatización de secuencias diarias para reducir la carga cognitiva matutina y nocturna.
 
 ---
 
-# 🧱 Arquitectura del proyecto
+## 🧱 Arquitectura del Proyecto
 
-El proyecto está organizado con un enfoque **feature-first escalable**, separando claramente lógica de negocio, infraestructura y UI.
+El proyecto sigue una arquitectura **Feature-First** combinada con **Clean Architecture**, diseñada para ser escalable, testeable y fácil de mantener.
 
----
+### 📦 Estructura General de Carpetas
 
-## 📦 Estructura general
+```text
 lib/
--
-├── core/
--
-├── features/
--
-├── shared/
--
-└── main.dart
--
+├── core/                # Infraestructura global y configuraciones base
+├── features/            # Módulos de negocio (autónomos y escalables)
+├── shared/              # Recursos de UI y utilidades compartidas
+└── main.dart            # Punto de entrada de la aplicación
+```
 
 ---
 
-# 🧠 CORE (infraestructura global)
+### 🧠 Capa CORE (Infraestructura)
 
-Contiene toda la base técnica del proyecto.
--
+Contiene la lógica transversal que soporta a todas las funcionalidades.
+
+```text
 core/
--
-├── app/
--
-│ ├── app_initializer.dart
--
-│ ├── session_controller.dart
--
-│
-├── firebase/
--
-│ ├── firebase_options.dart
--
-│ ├── firebase_init.dart
--
-│
-├── auth/
--
-│ ├── auth_service.dart
--
-│ ├── auth_repository.dart
--
-│ ├── user_provider.dart
--
-│
-├── firestore/
--
-│ ├── firestore_client.dart
--
-│ ├── collections.dart
--
-│
-├── cache/
--
-│ ├── local_storage_service.dart
--
-│
-├── router/
--
-│ ├── app_router.dart
--
-│
-├── theme/
--
-│ ├── app_theme.dart
--
-│
-├── utils/
--
-│ ├── date_utils.dart
--
-│ ├── id_generator.dart
--
-
+├── app/                 # Inicialización y controladores de sesión global
+├── cache/               # Persistencia local (LocalStorage/Hive)
+├── constants/           # Valores estáticos y strings de la app
+├── firebase/            # Configuración de Firebase y servicios core
+├── firestore/           # Clientes y definiciones de colecciones
+├── router/              # Configuración de navegación (GoRouter)
+├── theme/               # Sistema de diseño, colores y tipografía
+└── utils/               # Helpers de fechas, validadores, etc.
+```
 
 ---
 
-# 🧩 FEATURES (módulos de la app)
+### 🧩 Capa FEATURES (Negocio)
 
-Cada feature es independiente y escalable.
-------------
+Cada funcionalidad está organizada en sub-capas para separar responsabilidades.
+
+```text
 features/
-├── auth/
-├── tasks/
-├── focus/
-├── routines/
-├── widget/
-├── ai/
-├── premium/
--------------
+├── auth/                # Gestión de identidad y OAuth
+├── tasks/               # Núcleo: Creación y gestión de micro-tareas
+│   ├── data/            # Repositorios y DataSources (Firebase/Local)
+│   ├── domain/          # Entidades puras y Casos de Uso (Usecases)
+│   └── presentation/    # Controladores (Riverpod), Screens y Widgets
+├── focus/               # Interfaz de ejecución de tarea única
+├── routines/            # Secuencias de acciones automatizadas
+├── ai/                  # Lógica de desglose de tareas mediante LLMs
+├── home/                # Panel principal y navegación rápida
+├── widget/              # Componentes para el Home Screen de Android/iOS
+└── premium/             # Gestión de suscripciones y límites
+```
 
 ---
 
-## 🔐 AUTH (autenticación)
-auth/
-├── data/
-├── domain/
-├── presentation/
+### 🎨 Capa SHARED (Componentes Comunes)
 
+Elementos de UI reutilizables en toda la aplicación para mantener la consistencia.
 
-✔ Login con Google OAuth  
-✔ Gestión de usuario global
-
----
-
-## 🧱 TASKS (núcleo de la app)
-
-Sistema principal de tareas y acción actual.
-
-
-tasks/
-├── data/
-│ ├── models/
-│ ├── datasources/
-│ ├── repositories/
-│
-├── domain/
-│ ├── entities/
-│ ├── repositories/
-│ ├── usecases/
-│ │ ├── add_task.dart
-│ │ ├── complete_task.dart
-│ │ ├── get_next_task.dart
-│
-├── presentation/
-│ ├── controllers/
-│ ├── screens/
-│ ├── widgets/
-
+```text
+shared/
+├── widgets/             # Botones, Cards y Inputs personalizados
+├── dialogs/             # Modales de confirmación y alertas
+├── styles/              # Decoraciones y constantes de estilo UI
+└── extensions/          # Extensiones de Dart/Flutter (BuildContext, etc.)
+```
 
 ---
 
-## 🧠 FOCUS (experiencia diferencial)
+## 🔄 Flujo de Datos (Data Flow)
 
+La comunicación entre capas sigue una dirección única para evitar acoplamientos:
 
-focus/
-├── data/
-├── domain/
-├── presentation/
-
-
-✔ Modo concentración  
-✔ Botón “Empezar”  
-✔ Temporizador simple  
-✔ Una sola acción visible
+1.  **UI (Widgets):** Captura el evento del usuario.
+2.  **Controller (Riverpod):** Gestiona el estado y llama al Caso de Uso.
+3.  **UseCase (Domain):** Ejecuta la regla de negocio.
+4.  **Repository (Data):** Decide si obtener datos de la nube o caché.
+5.  **DataSource:** Realiza la petición técnica (Firebase/API).
 
 ---
 
-## 🔁 ROUTINES (automatización)
+## ⚙️ Stack Tecnológico
 
-
-routines/
-├── data/
-├── domain/
-├── presentation/
-
-
-✔ Secuencias de acciones  
-✔ Rutinas tipo “mañana”, “estudio”, etc.
+- **Framework:** Flutter
+- **Estado:** Riverpod
+- **Backend:** Firebase (Auth, Firestore, Functions)
+- **Navegación:** GoRouter
+- **Persistencia:** Local Storage
+- **IA:** Integración con modelos de lenguaje para desglose de tareas.
 
 ---
 
-## 📱 WIDGET
+## 🚀 Estado del Proyecto
 
-
-widget/
-├── presentation/
-
-
-✔ Tarea actual  
-✔ Botón iniciar foco  
-✔ Acceso rápido a rutinas
-
----
-
-## 🤖 AI (diferenciador)
-
-
-ai/
-├── data/
-├── domain/
-├── presentation/
-
-
-✔ Convierte tareas grandes en microacciones  
-✔ Ejemplo: “Estudiar examen” → pasos de 1–3 min
-
----
-
-## 💰 PREMIUM
-
-
-premium/
-├── data/
-├── domain/
-├── presentation/
-
-
-✔ Suscripción  
-✔ Límites IA  
-✔ Features avanzadas
-
----
-
-# 🔄 Flujo de arquitectura
-
-
-UI
-↓
-Controller (Riverpod)
-↓
-UseCase
-↓
-Repository
-↓
-DataSource
-↓
-Firebase
-
-
----
-
-# ☁️ Firestore structure
-
-
-users/
-{uid}/
-tasks/
-routines/
-sessions/
-settings/
-
-
----
-
-# 🧠 Principios del proyecto
-
-- Firebase solo es infraestructura
-- La app siempre responde: “¿qué hago ahora?”
-- Solo una acción visible en pantalla
-- El sistema reduce decisiones, no las aumenta
-- Preparado para IA desde la base
-
----
-
-# 🚀 Estado del proyecto
-
-✔ Arquitectura definida  
-✔ Firebase integrado  
-✔ Escalable a IA y automatización  
-⏳ En desarrollo MVP  
+- [x] Arquitectura Base Definida
+- [x] Integración de Firebase
+- [x] Flujo de Autenticación
+- [ ] MVP de Tareas y Modo Foco (En progreso)
+- [ ] Integración de IA para desgloses
