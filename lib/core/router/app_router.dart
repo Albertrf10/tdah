@@ -5,6 +5,8 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/controllers/auth_state_provider.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/focus/presentation/screens/focus_screen.dart';
+import '../../features/tasks/presentation/screens/achievements_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -26,7 +28,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       // ✅ user logged → home
-      if (user != null && (isLogin || isRegister)) {
+      if (isLogin || isRegister) {
         return '/home';
       }
 
@@ -45,6 +47,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/focus/:taskId',
+        builder: (_, state) {
+          final taskId = state.pathParameters['taskId']!;
+          return FocusScreen(taskId: taskId);
+        },
+      ),
+      GoRoute(
+        path: '/achievements',
+        builder: (_, __) => const AchievementsScreen(),
       ),
     ],
   );

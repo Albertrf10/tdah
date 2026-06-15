@@ -19,10 +19,14 @@ class AuthDataSource {
     final user = userCredential.user;
 
     if (user != null) {
+      // Actualizar el perfil en Firebase Auth
+      await user.updateDisplayName(username);
+      
       await _db.collection('users').doc(user.uid).set({
-        'username': username,
+        'displayName': username,
         'email': email,
-        'createdAt': FieldValue.serverTimestamp(),
+        'createAt': FieldValue.serverTimestamp(),
+        'lasLoginAt': FieldValue.serverTimestamp(),
       });
     }
 
@@ -38,7 +42,12 @@ class AuthDataSource {
       password: password,
     );
 
-    return result.user;
+    final user = result.user;
+    if (user != null) {
+      await _updateLastLogin(user.uid);
+    }
+
+    return user;
   }
 
   Future<User?> loginWithGoogle() async {
@@ -62,14 +71,23 @@ class AuthDataSource {
 
       if (!doc.exists) {
         await _db.collection('users').doc(user.uid).set({
-          'username': user.displayName ?? '',
+          'displayName': user.displayName ?? '',
           'email': user.email,
-          'createdAt': FieldValue.serverTimestamp(),
+          'createAt': FieldValue.serverTimestamp(),
+          'lasLoginAt': FieldValue.serverTimestamp(),
         });
+      } else {
+        await _updateLastLogin(user.uid);
       }
     }
 
     return user;
+  }
+
+  Future<void> _updateLastLogin(String uid) async {
+    await _db.collection('users').doc(uid).update({
+      'lasLoginAt': FieldValue.serverTimestamp(),
+    });
   }
 
   Stream<User?> authStateChanges() {

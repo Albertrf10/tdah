@@ -29,8 +29,11 @@ dependencies:
   intl: ^0.19.0
   uuid: ^4.5.1
 
-  # 💾 LOCAL CACHE (para futuro offline + performance)
+  # 💾 LOCAL CACHE
   shared_preferences: ^2.3.2
+
+  # 🤖 AI
+  google_generative_ai: ^0.4.5
 
   # 📊 UI HELPERS
   flutter_hooks: ^0.20.5
@@ -41,9 +44,9 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
 
-  # 🧱 CODE GENERATION (IMPORTANTE PARA IA + MODELOS)
+  # 🧱 CODE GENERATION
   build_runner: ^2.4.9
   freezed: ^2.5.7
-  json_serializable: ^6.8.0
   freezed_annotation: ^2.4.4
+  json_serializable: ^6.8.0
   json_annotation: ^4.9.0
